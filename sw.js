@@ -1,20 +1,31 @@
-const CACHE = 'at-cruise-planner-v1';
-const ASSETS = ['/'];
+const CACHE_NAME = 'at-cruise-planner-v2';
 
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.addAll(['./index.html']);
+    })
+  );
   self.skipWaiting();
 });
 
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys => Promise.all(
-    keys.filter(k => k !== CACHE).map(k => caches.delete(k))
-  )));
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(keyList) {
+      return Promise.all(keyList.map(function(key) {
+        if (key !== CACHE_NAME) return caches.delete(key);
+      }));
+    })
+  );
   self.clients.claim();
 });
 
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('/')))
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      return response || fetch(event.request).catch(function() {
+        return caches.match('./index.html');
+      });
+    })
   );
 });
