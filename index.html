@@ -260,7 +260,7 @@
 
     .task-item {
       display: grid;
-      grid-template-columns: auto 1fr auto auto;
+      grid-template-columns: auto 1fr auto auto auto;
       align-items: start;
       gap: 1rem;
       padding: 1.1rem 1rem;
@@ -494,6 +494,85 @@
       line-height: 1;
     }
     .install-dismiss:hover { color: var(--cream); }
+
+    /* ── Reminder Bell ── */
+    .bell-btn {
+      background: none; border: none; color: var(--dim);
+      font-size: 0.95rem; cursor: pointer; padding: 0 0.25rem;
+      line-height: 1; margin-top: 1px; transition: color 0.15s; position: relative;
+    }
+    .bell-btn:hover { color: var(--gold); }
+    .bell-btn.active { color: var(--gold); }
+    .bell-btn.disabled { opacity: 0.3; cursor: not-allowed; }
+    .bell-btn .bell-tip {
+      display: none; position: absolute; bottom: calc(100% + 6px); right: 0;
+      background: var(--navy2); border: 1px solid rgba(201,160,80,0.2);
+      color: var(--cream); font-size: 0.65rem; letter-spacing: 0.06em;
+      white-space: nowrap; padding: 0.35rem 0.6rem; pointer-events: none; z-index: 10;
+    }
+    .bell-btn.disabled:hover .bell-tip { display: block; }
+
+    /* ── Reminder / Email Modals ── */
+    .rm-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(5,10,20,0.78); z-index: 500;
+      align-items: center; justify-content: center;
+    }
+    .rm-overlay.open { display: flex; }
+    .rm-box {
+      background: var(--navy2); border: 1px solid rgba(201,160,80,0.2);
+      padding: 2rem; width: min(92vw, 400px); position: relative;
+    }
+    .rm-title {
+      font-family: "Playfair Display", serif; font-style: italic;
+      font-size: 1.25rem; color: var(--cream); margin-bottom: 0.3rem;
+    }
+    .rm-sub { font-size: 0.8rem; color: var(--gold); letter-spacing: 0.06em; margin-bottom: 1.5rem; word-break: break-word; }
+    .rm-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); display: block; margin-bottom: 0.5rem; }
+    .rm-radios { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
+    .rm-radio-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.8rem; color: var(--cream); cursor: pointer; }
+    .rm-radio-row input[type="radio"] { accent-color: var(--gold); }
+    .rm-group { display: none; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+    .rm-group.visible { display: flex; }
+    .rm-input {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--cream); padding: 0.6rem 0.8rem; font-size: 0.82rem;
+      font-family: "Jost", sans-serif; width: 100%; outline: none; box-sizing: border-box;
+    }
+    .rm-input:focus { border-color: var(--gold); }
+    .rm-days-row { display: flex; gap: 0.5rem; align-items: center; }
+    .rm-days-row .rm-input[type="number"] { width: 70px; flex-shrink: 0; }
+    .rm-days-txt { font-size: 0.72rem; color: var(--dim); white-space: nowrap; }
+    .rm-btn {
+      background: var(--gold); color: var(--navy); border: none;
+      padding: 0.7rem 1.5rem; font-family: "Jost", sans-serif; font-size: 0.72rem;
+      font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer; width: 100%; margin-top: 0.5rem; transition: background 0.2s;
+    }
+    .rm-btn:hover:not(:disabled) { background: var(--gold-lt); }
+    .rm-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .rm-close { position: absolute; top: 0.75rem; right: 0.9rem; background: none; border: none; color: var(--dim); font-size: 1.3rem; cursor: pointer; line-height: 1; }
+    .rm-close:hover { color: var(--cream); }
+    .rm-note { font-size: 0.68rem; color: var(--dim); margin-top: 1rem; line-height: 1.5; }
+
+    /* ── My Reminders Section ── */
+    .reminders-section { margin-top: 2rem; }
+    .reminders-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); user-select: none; }
+    .reminders-toggle-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); }
+    .reminders-toggle-count { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold); }
+    .reminders-toggle-arrow { font-size: 0.7rem; color: var(--dim); transition: transform 0.2s; }
+    .reminders-section.open .reminders-toggle-arrow { transform: rotate(180deg); }
+    .reminders-list { display: none; flex-direction: column; gap: 0.7rem; padding-top: 1rem; }
+    .reminders-section.open .reminders-list { display: flex; }
+    .reminder-card { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 0.85rem 1rem; }
+    .rc-task { font-size: 0.82rem; color: var(--cream); margin-bottom: 0.25rem; word-break: break-word; }
+    .rc-date { font-size: 0.6rem; letter-spacing: 0.1em; color: var(--dim); }
+    .rc-cancel { background: none; border: 1px solid rgba(255,255,255,0.1); color: var(--dim); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.6rem; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: color 0.15s, border-color 0.15s; }
+    .rc-cancel:hover { color: var(--danger); border-color: var(--danger); }
+    .reminders-footer { margin-top: 0.75rem; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--dim); }
+    .reminders-footer a { color: var(--gold); text-decoration: none; opacity: 0.7; }
+    .reminders-footer a:hover { opacity: 1; }
+    .reminders-empty { font-size: 0.72rem; color: var(--dim); padding: 0.8rem 0; text-align: center; letter-spacing: 0.06em; }
   </style>
 </head>
 <body>
@@ -562,6 +641,17 @@
     <div class="empty-icon">⚓</div>
     <div class="empty-title">All clear on deck.</div>
     <div class="empty-sub">Add your first cruise task above</div>
+  </div>
+
+  <!-- My Reminders -->
+  <div class="reminders-section" id="reminders-section">
+    <div class="reminders-toggle" id="reminders-toggle">
+      <span class="reminders-toggle-title">&#x1F514; My Reminders</span>
+      <span class="reminders-toggle-count" id="reminders-count"></span>
+      <span class="reminders-toggle-arrow">&#x25BC;</span>
+    </div>
+    <div class="reminders-list" id="reminders-list"></div>
+    <div class="reminders-footer" id="reminders-footer"></div>
   </div>
 
 </div>
@@ -648,7 +738,23 @@
       del.textContent = '×';
       del.addEventListener('click', () => remove(t.id));
 
-      li.append(cb, body, badge, del);
+
+      // Bell button
+      const active = hasReminder(t.id);
+      const full   = remindersFull() && !active; // PAYWALL
+      const bell   = document.createElement("button");
+      bell.className = "bell-btn" + (active ? " active" : full ? " disabled" : "");
+      bell.textContent = "🔔";
+      bell.setAttribute("aria-label", active ? "Reminder set" : "Set reminder");
+      if (full) {
+        const tip = document.createElement("span");
+        tip.className = "bell-tip";
+        tip.textContent = "Upgrade to Pro for unlimited reminders"; // PAYWALL
+        bell.appendChild(tip);
+      } else {
+        bell.addEventListener("click", () => onBellClick(t));
+      }
+      li.append(cb, body, badge, bell, del);
       list.appendChild(li);
     });
 
@@ -698,7 +804,171 @@
     save(); render();
   });
 
+
+  // ═════════════════════════════════════════════
+  // EMAIL REMINDERS
+  // ═════════════════════════════════════════════
+
+  // 👤 YOU: Update this URL after deploying the Worker (Part 2)
+  const WORKER_URL = "https://at-reminder-worker.YOURSUBDOMAIN.workers.dev";
+
+  const MAX_FREE_REMINDERS = 3; // PAYWALL — increase limit for Pro users
+
+  let reminderEmail = localStorage.getItem("at_reminder_email") || "";
+  let reminders     = JSON.parse(localStorage.getItem("at_reminders") || "[]");
+  let pendingTask   = null;
+
+  function saveReminders() { localStorage.setItem("at_reminders", JSON.stringify(reminders)); }
+  function hasReminder(taskId) { return reminders.some(r => r.taskId === taskId); }
+  function remindersFull() { return reminders.length >= MAX_FREE_REMINDERS; } // PAYWALL
+
+  function fmtIso(iso) {
+    const [y,m,d] = iso.split("-");
+    return new Date(+y,+m-1,+d).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  }
+  function escHtml(s) {
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  // Email modal
+  function openEmailModal(task) {
+    pendingTask = task;
+    document.getElementById("email-modal").classList.add("open");
+    setTimeout(() => document.getElementById("email-input").focus(), 50);
+  }
+  function closeEmailModal() { document.getElementById("email-modal").classList.remove("open"); }
+  document.getElementById("email-save-btn").addEventListener("click", () => {
+    const val = document.getElementById("email-input").value.trim();
+    if (!val || !val.includes("@")) { document.getElementById("email-input").focus(); return; }
+    reminderEmail = val;
+    localStorage.setItem("at_reminder_email", reminderEmail);
+    closeEmailModal();
+    if (pendingTask) { openReminderModal(pendingTask); pendingTask = null; }
+  });
+  document.getElementById("email-modal-close").addEventListener("click", closeEmailModal);
+  document.getElementById("email-modal").addEventListener("click", e => { if (e.target.id === "email-modal") closeEmailModal(); });
+  document.getElementById("email-input").addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("email-save-btn").click(); });
+
+  // Reminder modal
+  function openReminderModal(task) {
+    document.getElementById("rm-task-label").textContent = task.text;
+    document.getElementById("rm-date-input").value = "";
+    document.getElementById("rm-days-input").value = "";
+    document.getElementById("rm-deadline-input").value = "";
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("rm-date-input").min = today;
+    document.getElementById("rm-deadline-input").min = today;
+    document.querySelector("input[name=\"rm-type\"][value=\"date\"]").checked = true;
+    document.getElementById("rm-group-date").classList.add("visible");
+    document.getElementById("rm-group-days").classList.remove("visible");
+    document.getElementById("rm-set-btn").dataset.taskId   = task.id;
+    document.getElementById("rm-set-btn").dataset.taskText = task.text;
+    document.getElementById("rm-set-btn").disabled   = false;
+    document.getElementById("rm-set-btn").textContent = "Set Reminder";
+    document.getElementById("reminder-modal").classList.add("open");
+    setTimeout(() => document.getElementById("rm-date-input").focus(), 50);
+  }
+  function closeReminderModal() { document.getElementById("reminder-modal").classList.remove("open"); }
+
+  document.querySelectorAll("input[name=\"rm-type\"]").forEach(radio => {
+    radio.addEventListener("change", () => {
+      const byDate = radio.value === "date";
+      document.getElementById("rm-group-date").classList.toggle("visible", byDate);
+      document.getElementById("rm-group-days").classList.toggle("visible", !byDate);
+    });
+  });
+
+  document.getElementById("rm-set-btn").addEventListener("click", async () => {
+    const taskId   = +document.getElementById("rm-set-btn").dataset.taskId;
+    const taskText = document.getElementById("rm-set-btn").dataset.taskText;
+    const type     = document.querySelector("input[name=\"rm-type\"]:checked").value;
+    let fireDate;
+    if (type === "date") {
+      fireDate = document.getElementById("rm-date-input").value;
+      if (!fireDate) { document.getElementById("rm-date-input").focus(); return; }
+    } else {
+      const days     = parseInt(document.getElementById("rm-days-input").value, 10);
+      const deadline = document.getElementById("rm-deadline-input").value;
+      if (!days || !deadline) { document.getElementById(days ? "rm-deadline-input" : "rm-days-input").focus(); return; }
+      const d = new Date(deadline);
+      d.setDate(d.getDate() - days);
+      fireDate = d.toISOString().split("T")[0];
+    }
+    const btn = document.getElementById("rm-set-btn");
+    btn.disabled = true; btn.textContent = "Setting…";
+    try {
+      const res = await fetch(WORKER_URL + "/set-reminder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: reminderEmail, taskText, fireDate })
+      });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const { id: kvId } = await res.json();
+      reminders.push({ id: Date.now(), taskId, taskText, fireDate, kvId });
+      saveReminders(); closeReminderModal(); render(); renderReminders();
+    } catch (e) {
+      btn.textContent = "Set Reminder"; btn.disabled = false;
+      alert("Could not set reminder — please try again.");
+    }
+  });
+  document.getElementById("reminder-modal-close").addEventListener("click", closeReminderModal);
+  document.getElementById("reminder-modal").addEventListener("click", e => { if (e.target.id === "reminder-modal") closeReminderModal(); });
+
+  // Bell click
+  function onBellClick(task) {
+    if (hasReminder(task.id)) {
+      const sec = document.getElementById("reminders-section");
+      sec.classList.add("open");
+      sec.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      return;
+    }
+    if (!reminderEmail) { openEmailModal(task); } else { openReminderModal(task); }
+  }
+
+  // Cancel reminder
+  async function cancelReminder(remId) {
+    const r = reminders.find(r => r.id === remId);
+    if (!r) return;
+    fetch(WORKER_URL + "/reminder/" + encodeURIComponent(r.kvId), { method: "DELETE" }).catch(() => {});
+    reminders = reminders.filter(r => r.id !== remId);
+    saveReminders(); render(); renderReminders();
+  }
+
+  // Render My Reminders
+  function renderReminders() {
+    const list   = document.getElementById("reminders-list");
+    const count  = document.getElementById("reminders-count");
+    const footer = document.getElementById("reminders-footer");
+    count.textContent = reminders.length ? reminders.length + " / " + MAX_FREE_REMINDERS + " used" : ""; // PAYWALL
+    if (!reminders.length) {
+      list.innerHTML = "<div class=\"reminders-empty\">No reminders set yet.</div>";
+      footer.innerHTML = ""; return;
+    }
+    list.innerHTML = reminders.map(r =>
+      "<div class=\"reminder-card\">" +
+        "<div><div class=\"rc-task\">" + escHtml(r.taskText) + "</div>" +
+        "<div class=\"rc-date\">Fires " + fmtIso(r.fireDate) + "</div></div>" +
+        "<button class=\"rc-cancel\" onclick=\"cancelReminder(" + r.id + ")\">Cancel</button>" +
+      "</div>"
+    ).join("");
+    footer.innerHTML = "<a href=\"#\" onclick=\"changeEmail();return false;\">Change reminder email</a>";
+  }
+
+  function changeEmail() {
+    const cur = localStorage.getItem("at_reminder_email") || "";
+    const val = prompt("Update reminder email:", cur);
+    if (val && val.trim() && val.includes("@")) {
+      reminderEmail = val.trim();
+      localStorage.setItem("at_reminder_email", reminderEmail);
+    }
+  }
+
+  document.getElementById("reminders-toggle").addEventListener("click", () => {
+    document.getElementById("reminders-section").classList.toggle("open");
+  });
+
   render();
+  renderReminders();
 </script>
 
 <div id="install-banner">
@@ -746,5 +1016,45 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
+
+<!-- Email Capture Modal -->
+<div class="rm-overlay" id="email-modal">
+  <div class="rm-box">
+    <button class="rm-close" id="email-modal-close">&times;</button>
+    <div class="rm-title">One last thing.</div>
+    <div class="rm-sub">Where should we send your reminder?</div>
+    <label class="rm-label" for="email-input">Your email address</label>
+    <input class="rm-input" type="email" id="email-input" placeholder="you@example.com" autocomplete="email"/>
+    <button class="rm-btn" id="email-save-btn">Save &amp; Continue</button>
+    <div class="rm-note">We only use this address for reminders you set. No marketing.</div>
+  </div>
+</div>
+
+<!-- Set Reminder Modal -->
+<div class="rm-overlay" id="reminder-modal">
+  <div class="rm-box">
+    <button class="rm-close" id="reminder-modal-close">&times;</button>
+    <div class="rm-title">Set a Reminder</div>
+    <div class="rm-sub" id="rm-task-label"></div>
+    <label class="rm-label">When should we remind you?</label>
+    <div class="rm-radios">
+      <label class="rm-radio-row"><input type="radio" name="rm-type" value="date" checked> On a specific date</label>
+      <label class="rm-radio-row"><input type="radio" name="rm-type" value="days"> Days before a deadline</label>
+    </div>
+    <div class="rm-group visible" id="rm-group-date">
+      <label class="rm-label" for="rm-date-input">Reminder date</label>
+      <input class="rm-input" type="date" id="rm-date-input"/>
+    </div>
+    <div class="rm-group" id="rm-group-days">
+      <label class="rm-label">Days before deadline</label>
+      <div class="rm-days-row">
+        <input class="rm-input" type="number" id="rm-days-input" min="1" max="365" placeholder="7"/>
+        <span class="rm-days-txt">days before</span>
+        <input class="rm-input" type="date" id="rm-deadline-input"/>
+      </div>
+    </div>
+    <button class="rm-btn" id="rm-set-btn">Set Reminder</button>
+  </div>
+</div>
 </body>
 </html>
