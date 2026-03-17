@@ -670,6 +670,48 @@
   </div>
   </div><!-- end footer-logos --></footer>
 
+
+
+<!-- Email Capture Modal -->
+<div class="rm-overlay" id="email-modal">
+  <div class="rm-box">
+    <button class="rm-close" id="email-modal-close">&times;</button>
+    <div class="rm-title">One last thing.</div>
+    <div class="rm-sub">Where should we send your reminder?</div>
+    <label class="rm-label" for="email-input">Your email address</label>
+    <input class="rm-input" type="email" id="email-input" placeholder="you@example.com" autocomplete="email"/>
+    <button class="rm-btn" id="email-save-btn">Save &amp; Continue</button>
+    <div class="rm-note">We only use this address for reminders you set. No marketing.</div>
+  </div>
+</div>
+
+<!-- Set Reminder Modal -->
+<div class="rm-overlay" id="reminder-modal">
+  <div class="rm-box">
+    <button class="rm-close" id="reminder-modal-close">&times;</button>
+    <div class="rm-title">Set a Reminder</div>
+    <div class="rm-sub" id="rm-task-label"></div>
+    <label class="rm-label">When should we remind you?</label>
+    <div class="rm-radios">
+      <label class="rm-radio-row"><input type="radio" name="rm-type" value="date" checked> On a specific date</label>
+      <label class="rm-radio-row"><input type="radio" name="rm-type" value="days"> Days before a deadline</label>
+    </div>
+    <div class="rm-group visible" id="rm-group-date">
+      <label class="rm-label" for="rm-date-input">Reminder date</label>
+      <input class="rm-input" type="date" id="rm-date-input"/>
+    </div>
+    <div class="rm-group" id="rm-group-days">
+      <label class="rm-label">Days before deadline</label>
+      <div class="rm-days-row">
+        <input class="rm-input" type="number" id="rm-days-input" min="1" max="365" placeholder="7"/>
+        <span class="rm-days-txt">days before</span>
+        <input class="rm-input" type="date" id="rm-deadline-input"/>
+      </div>
+    </div>
+    <button class="rm-btn" id="rm-set-btn">Set Reminder</button>
+  </div>
+</div>
+
 <script>
   const input    = document.getElementById('task-input');
   const addBtn   = document.getElementById('add-btn');
@@ -1017,44 +1059,11 @@ if ('serviceWorker' in navigator) {
 </script>
 
 
-<!-- Email Capture Modal -->
-<div class="rm-overlay" id="email-modal">
-  <div class="rm-box">
-    <button class="rm-close" id="email-modal-close">&times;</button>
-    <div class="rm-title">One last thing.</div>
-    <div class="rm-sub">Where should we send your reminder?</div>
-    <label class="rm-label" for="email-input">Your email address</label>
-    <input class="rm-input" type="email" id="email-input" placeholder="you@example.com" autocomplete="email"/>
-    <button class="rm-btn" id="email-save-btn">Save &amp; Continue</button>
-    <div class="rm-note">We only use this address for reminders you set. No marketing.</div>
-  </div>
-</div>
-
-<!-- Set Reminder Modal -->
-<div class="rm-overlay" id="reminder-modal">
-  <div class="rm-box">
-    <button class="rm-close" id="reminder-modal-close">&times;</button>
-    <div class="rm-title">Set a Reminder</div>
-    <div class="rm-sub" id="rm-task-label"></div>
-    <label class="rm-label">When should we remind you?</label>
-    <div class="rm-radios">
-      <label class="rm-radio-row"><input type="radio" name="rm-type" value="date" checked> On a specific date</label>
-      <label class="rm-radio-row"><input type="radio" name="rm-type" value="days"> Days before a deadline</label>
-    </div>
-    <div class="rm-group visible" id="rm-group-date">
-      <label class="rm-label" for="rm-date-input">Reminder date</label>
-      <input class="rm-input" type="date" id="rm-date-input"/>
-    </div>
-    <div class="rm-group" id="rm-group-days">
-      <label class="rm-label">Days before deadline</label>
-      <div class="rm-days-row">
-        <input class="rm-input" type="number" id="rm-days-input" min="1" max="365" placeholder="7"/>
-        <span class="rm-days-txt">days before</span>
-        <input class="rm-input" type="date" id="rm-deadline-input"/>
-      </div>
-    </div>
-    <button class="rm-btn" id="rm-set-btn">Set Reminder</button>
-  </div>
-</div>
+</body>
+</html>
+</body>
+</html>
+</body>
+</html>
 </body>
 </html>
