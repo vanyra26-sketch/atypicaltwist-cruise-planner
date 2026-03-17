@@ -573,6 +573,83 @@
     .reminders-footer a { color: var(--gold); text-decoration: none; opacity: 0.7; }
     .reminders-footer a:hover { opacity: 1; }
     .reminders-empty { font-size: 0.72rem; color: var(--dim); padding: 0.8rem 0; text-align: center; letter-spacing: 0.06em; }
+
+    /* ── Checklist Button ── */
+    .checklist-btn {
+      background: none; border: 1px solid rgba(154,122,63,0.45); color: var(--gold);
+      font-family: 'Jost', sans-serif; font-size: 0.62rem; letter-spacing: 0.14em;
+      text-transform: uppercase; padding: 0.3rem 0.8rem; cursor: pointer;
+      white-space: nowrap; transition: background 0.2s, color 0.2s; flex-shrink: 0;
+    }
+    .checklist-btn:hover { background: rgba(154,122,63,0.12); }
+
+    /* ── Shop link & note inline ── */
+    .shop-link {
+      display: inline-block; margin-left: 0.35rem; font-size: 0.72rem;
+      color: rgba(154,122,63,0.55); text-decoration: none; vertical-align: middle;
+      transition: color 0.15s; line-height: 1;
+    }
+    .shop-link:hover { color: var(--gold); }
+    .task-note-icon {
+      display: inline-block; margin-left: 0.35rem; font-size: 0.72rem;
+      vertical-align: middle; cursor: help; line-height: 1; position: relative;
+    }
+    .task-note-icon .task-note-tip {
+      display: none; position: absolute; bottom: calc(100% + 5px); left: 0;
+      background: var(--navy2); border: 1px solid rgba(201,160,80,0.2);
+      color: var(--cream); font-size: 0.65rem; letter-spacing: 0.04em;
+      white-space: nowrap; padding: 0.3rem 0.55rem; pointer-events: none; z-index: 20;
+    }
+    .task-note-icon:hover .task-note-tip { display: block; }
+
+    /* ── Checklist Modal ── */
+    .cl-box {
+      width: min(92vw, 660px) !important;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .cl-controls {
+      display: flex; gap: 0.75rem; margin-bottom: 0.5rem; flex-shrink: 0;
+    }
+    .cl-ctrl-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.12); color: var(--dim);
+      font-family: 'Jost', sans-serif; font-size: 0.62rem; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.28rem 0.7rem; cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .cl-ctrl-btn:hover { color: var(--cream); border-color: rgba(255,255,255,0.3); }
+    .cl-scroll {
+      overflow-y: auto; flex: 1; min-height: 0;
+      margin: 0.75rem 0 0.5rem; padding-right: 0.4rem;
+    }
+    .cl-scroll::-webkit-scrollbar { width: 3px; }
+    .cl-scroll::-webkit-scrollbar-thumb { background: rgba(154,122,63,0.3); }
+    .cl-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem;
+    }
+    .cl-category {}
+    .cl-cat-header {
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.55rem; padding-bottom: 0.35rem;
+      border-bottom: 1px solid rgba(154,122,63,0.2);
+    }
+    .cl-item {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      font-size: 0.78rem; color: var(--cream); padding: 0.22rem 0;
+      cursor: pointer; line-height: 1.4;
+    }
+    .cl-item input[type="checkbox"] { accent-color: var(--gold); margin-top: 2px; flex-shrink: 0; }
+    .cl-disclaimer {
+      font-size: 0.6rem; color: var(--dim); line-height: 1.5;
+      margin-top: 0.5rem; flex-shrink: 0; padding-top: 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    @media (max-width: 540px) {
+      .cl-grid { grid-template-columns: 1fr; }
+      .cl-box { width: min(92vw, 660px) !important; }
+    }
   </style>
 </head>
 <body>
@@ -633,6 +710,7 @@
 
   <div class="section-heading">
     <h2>Your Tasks</h2>
+    <button class="checklist-btn" id="checklist-btn">&#x1F9F3; Load Cruise Checklist</button>
   </div>
 
   <ul id="task-list"></ul>
@@ -712,6 +790,25 @@
   </div>
 </div>
 
+
+<!-- Checklist Modal -->
+<div class="rm-overlay" id="checklist-modal">
+  <div class="rm-box cl-box">
+    <button class="rm-close" id="checklist-modal-close">&times;</button>
+    <div class="rm-title">Your Cruise Packing List</div>
+    <div class="rm-sub">Select categories to add to your planner</div>
+    <div class="cl-controls">
+      <button class="cl-ctrl-btn" id="cl-select-all">Select All</button>
+      <button class="cl-ctrl-btn" id="cl-deselect-all">Deselect All</button>
+    </div>
+    <div class="cl-scroll">
+      <div class="cl-grid" id="cl-grid"></div>
+    </div>
+    <div class="cl-disclaimer">Links are suggestions only. As an Amazon Associate we may earn from qualifying purchases.</div>
+    <button class="rm-btn" id="cl-add-btn">Add to My Planner</button>
+  </div>
+</div>
+
 <script>
   const input    = document.getElementById('task-input');
   const addBtn   = document.getElementById('add-btn');
@@ -763,6 +860,23 @@
       const txt = document.createElement('div');
       txt.className = 'task-text';
       txt.textContent = t.text;
+      if (t.shopUrl) {
+        const shop = document.createElement('a');
+        shop.className = 'shop-link';
+        shop.href = t.shopUrl; // AFFILIATE-LINK — swap for affiliate URL later
+        shop.target = '_blank';
+        shop.rel = 'noopener noreferrer';
+        shop.textContent = '🛒';
+        shop.title = 'Shop this item';
+        shop.addEventListener('click', e => e.stopPropagation());
+        txt.appendChild(shop);
+      }
+      if (t.note) {
+        const noteEl = document.createElement('span');
+        noteEl.className = 'task-note-icon';
+        noteEl.innerHTML = '⚠️<span class="task-note-tip">' + t.note + '</span>';
+        txt.appendChild(noteEl);
+      }
 
       const date = document.createElement('div');
       date.className = 'task-date';
@@ -1008,6 +1122,174 @@
   document.getElementById("reminders-toggle").addEventListener("click", () => {
     document.getElementById("reminders-section").classList.toggle("open");
   });
+
+
+  // ═══════════════════════════════════════════
+  // CRUISE CHECKLIST
+  // ═══════════════════════════════════════════
+
+  const CHECKLIST_DATA = [
+    {
+      emoji: "🧳", label: "Pack Your Bags", cat: "packing",
+      items: [
+        { text: "Casual Clothes",       shopUrl: "https://www.amazon.com/s?k=cruise+packing+clothing" },
+        { text: "Elegant Night Attire", shopUrl: "https://www.amazon.com/s?k=cruise+packing+clothing" },
+        { text: "Theme Night Attire",   shopUrl: "https://www.amazon.com/s?k=cruise+packing+clothing" },
+        { text: "Jacket/Sweater",       shopUrl: "https://www.amazon.com/s?k=cruise+packing+clothing" },
+        { text: "Pajamas",              shopUrl: "https://www.amazon.com/s?k=cruise+packing+clothing" },
+        { text: "Underwear",            shopUrl: "https://www.amazon.com/s?k=cruise+packing+clothing" },
+        { text: "Swimwear",             shopUrl: "https://www.amazon.com/s?k=cruise+packing+clothing" },
+        { text: "Coverups",             shopUrl: "https://www.amazon.com/s?k=cruise+packing+clothing" },
+      ]
+    },
+    {
+      emoji: "💟", label: "Shore Steps", cat: "packing",
+      items: [
+        { text: "Water Shoes",      shopUrl: "https://www.amazon.com/s?k=travel+shoes+cruise" },
+        { text: "Flip Flops/Sandals", shopUrl: "https://www.amazon.com/s?k=travel+shoes+cruise" },
+        { text: "Closed-Toe Shoes",  shopUrl: "https://www.amazon.com/s?k=travel+shoes+cruise" },
+        { text: "Dressy Shoes",      shopUrl: "https://www.amazon.com/s?k=travel+shoes+cruise" },
+      ]
+    },
+    {
+      emoji: "🧼", label: "Glow Up Bag", cat: "packing",
+      items: [
+        { text: "Shampoo/Conditioner", shopUrl: "https://www.amazon.com/s?k=travel+size+shampoo+conditioner" },
+        { text: "Deodorant",           shopUrl: "https://www.amazon.com/s?k=travel+size+deodorant" },
+        { text: "Feminine Hygiene",    shopUrl: "https://www.amazon.com/s?k=feminine+hygiene+travel" },
+        { text: "Wrinkle Releaser",    shopUrl: "https://www.amazon.com/s?k=downy+wrinkle+releaser+travel+size" },
+        { text: "Sunscreen",           shopUrl: "https://www.amazon.com/s?k=reef+safe+sunscreen+travel" },
+        { text: "First Aid Kit",       shopUrl: "https://www.amazon.com/s?k=travel+first+aid+kit" },
+        { text: "Toothbrush/Paste",    shopUrl: "https://www.amazon.com/s?k=travel+toothbrush+toothpaste" },
+        { text: "Floss",               shopUrl: "https://www.amazon.com/s?k=travel+floss" },
+        { text: "Hair Brush/Comb",     shopUrl: "https://www.amazon.com/s?k=travel+hair+brush+comb" },
+        { text: "Medicines",           shopUrl: "https://www.amazon.com/s?k=travel+medicine+kit" },
+        { text: "Lotion",              shopUrl: "https://www.amazon.com/s?k=travel+size+lotion" },
+        { text: "Contacts/Glasses",    shopUrl: "https://www.amazon.com/s?k=contact+lens+travel+case" },
+        { text: "Cosmetics",           shopUrl: "https://www.amazon.com/s?k=travel+makeup+bag" },
+        { text: "Seasickness Meds",    shopUrl: "https://www.amazon.com/s?k=bonine+motion+sickness" },
+      ]
+    },
+    {
+      emoji: "⚓", label: "Cruise Hacks", cat: "onboard",
+      items: [
+        { text: "Magnetic Hooks",               shopUrl: "https://www.amazon.com/s?k=DIYMAG+magnetic+hooks+cruise" },
+        { text: "Outlet Extender with USB Slots", shopUrl: "https://www.amazon.com/s?k=cruise+approved+power+strip+no+surge",
+          note: "Not permitted on Royal Caribbean ships" },
+        { text: "Outlet Stabilizers",           shopUrl: "https://www.amazon.com/s?k=outlet+stabilizer+plug+tightener" },
+        { text: "Door Decorations",             shopUrl: "https://www.amazon.com/s?k=cruise+door+magnets+decorations" },
+        { text: "Neck/Travel Fan",              shopUrl: "https://www.amazon.com/s?k=DRIFWIN+magnetic+cruise+fan" },
+        { text: "Spices/Sprinkles",             shopUrl: "https://www.amazon.com/s?k=travel+spice+containers" },
+        { text: "Lanyard",                      shopUrl: "https://www.amazon.com/s?k=cruise+lanyard+retractable" },
+        { text: "Reusable Straws",              shopUrl: "https://www.amazon.com/s?k=reusable+straws+travel+case" },
+        { text: "Ziploc Bags",                  shopUrl: "https://www.amazon.com/s?k=ziploc+freezer+bags+variety" },
+        { text: "Phone Charger/Power Bank",     shopUrl: "https://www.amazon.com/s?k=anker+power+bank+travel" },
+        { text: "Dry Bag",                      shopUrl: "https://www.amazon.com/s?k=dry+bag+waterproof+travel" },
+      ]
+    },
+    {
+      emoji: "🏖️", label: "Sun & Surf", cat: "excursions",
+      items: [
+        { text: "Inflatable Float",  shopUrl: "https://www.amazon.com/s?k=inflatable+pool+float+travel" },
+        { text: "Towel Clips/Bands", shopUrl: "https://www.amazon.com/s?k=towel+clips+cruise+beach" },
+        { text: "Snorkel Gear",      shopUrl: "https://www.amazon.com/s?k=snorkel+set+travel" },
+        { text: "Beach Toys",        shopUrl: "https://www.amazon.com/s?k=beach+toys+travel" },
+        { text: "Sunglasses",        shopUrl: "https://www.amazon.com/s?k=polarized+sunglasses+travel" },
+        { text: "Hat",               shopUrl: "https://www.amazon.com/s?k=packable+sun+hat+travel" },
+        { text: "Water Bottle",      shopUrl: "https://www.amazon.com/s?k=insulated+water+bottle+travel" },
+      ]
+    },
+    {
+      emoji: "💍", label: "Finishing Touches", cat: "packing",
+      items: [
+        { text: "Book",               shopUrl: "https://www.amazon.com/s?k=best+beach+reads+2026" },
+        { text: "Deck of Cards",      shopUrl: "https://www.amazon.com/s?k=playing+cards+travel" },
+        { text: "Jewelry",            shopUrl: "https://www.amazon.com/s?k=travel+jewelry+organizer" },
+        { text: "Hair Styling Tools", shopUrl: "https://www.amazon.com/s?k=dual+voltage+travel+hair+tools" },
+      ]
+    },
+    {
+      emoji: "📋", label: "All Hands on Deck", cat: "documents",
+      items: [
+        { text: "Passport and/or Birth Certificate and ID", shopUrl: "https://www.amazon.com/s?k=passport+holder+travel+wallet" },
+        { text: "Bag or Purse for Documents",               shopUrl: "https://www.amazon.com/s?k=travel+document+organizer+bag" },
+        { text: "Cash & Credit Cards",                      shopUrl: "https://www.amazon.com/s?k=rfid+blocking+travel+wallet" },
+        { text: "Singles for Extra Tips",                   shopUrl: "https://www.amazon.com/s?k=money+organizer+travel" },
+        { text: "Cruise Ship Boarding Pass",                shopUrl: "https://www.amazon.com/s?k=waterproof+document+pouch" },
+        { text: "Downloaded Cruise Line App" },
+        { text: "Cruise Luggage Tags",                      shopUrl: "https://www.amazon.com/s?k=cruise+luggage+tag+holders" },
+      ]
+    },
+  ];
+
+  function openChecklistModal() {
+    const grid = document.getElementById("cl-grid");
+    grid.innerHTML = "";
+    CHECKLIST_DATA.forEach((cat, ci) => {
+      const div = document.createElement("div");
+      div.className = "cl-category";
+      const hdr = document.createElement("div");
+      hdr.className = "cl-cat-header";
+      hdr.textContent = cat.emoji + " " + cat.label;
+      div.appendChild(hdr);
+      cat.items.forEach((item, ii) => {
+        const lbl = document.createElement("label");
+        lbl.className = "cl-item";
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = true;
+        cb.dataset.catIdx  = ci;
+        cb.dataset.itemIdx = ii;
+        lbl.appendChild(cb);
+        lbl.appendChild(document.createTextNode(" " + item.text));
+        if (item.note) {
+          const w = document.createElement("span");
+          w.style.cssText = "margin-left:0.3rem;font-size:0.7rem;cursor:help;";
+          w.title = item.note;
+          w.textContent = "⚠️";
+          lbl.appendChild(w);
+        }
+        div.appendChild(lbl);
+      });
+      grid.appendChild(div);
+    });
+    document.getElementById("checklist-modal").classList.add("open");
+  }
+
+  function closeChecklistModal() {
+    document.getElementById("checklist-modal").classList.remove("open");
+  }
+
+  function addChecklistToPlanner() {
+    const checked  = document.querySelectorAll("#cl-grid input[type=\"checkbox\"]:checked");
+    const existing = new Set(tasks.map(t => t.text.trim().toLowerCase()));
+    let added = 0;
+    checked.forEach(cb => {
+      const item = CHECKLIST_DATA[+cb.dataset.catIdx].items[+cb.dataset.itemIdx];
+      const cat  = CHECKLIST_DATA[+cb.dataset.catIdx].cat;
+      if (existing.has(item.text.trim().toLowerCase())) return;
+      const entry = { id: Date.now() + added++, text: item.text, cat, done: false };
+      if (item.shopUrl) entry.shopUrl = item.shopUrl; // AFFILIATE-LINK
+      if (item.note)    entry.note    = item.note;
+      existing.add(item.text.trim().toLowerCase());
+      tasks.push(entry);
+    });
+    if (added > 0) { save(); render(); }
+    closeChecklistModal();
+  }
+
+  document.getElementById("checklist-btn").addEventListener("click", openChecklistModal);
+  document.getElementById("checklist-modal-close").addEventListener("click", closeChecklistModal);
+  document.getElementById("checklist-modal").addEventListener("click", e => {
+    if (e.target.id === "checklist-modal") closeChecklistModal();
+  });
+  document.getElementById("cl-select-all").addEventListener("click", () => {
+    document.querySelectorAll("#cl-grid input[type=\"checkbox\"]").forEach(cb => cb.checked = true);
+  });
+  document.getElementById("cl-deselect-all").addEventListener("click", () => {
+    document.querySelectorAll("#cl-grid input[type=\"checkbox\"]").forEach(cb => cb.checked = false);
+  });
+  document.getElementById("cl-add-btn").addEventListener("click", addChecklistToPlanner);
 
   render();
   renderReminders();
