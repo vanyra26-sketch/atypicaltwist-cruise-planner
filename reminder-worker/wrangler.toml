@@ -1,0 +1,14 @@
+name            = "at-reminder-worker"
+main            = "worker.js"
+compatibility_date = "2025-09-27"
+
+[triggers]
+crons = ["0 9 * * *"]   # Daily at 9 AM UTC
+
+[[kv_namespaces]]
+binding  = "REMINDERS"
+id       = "REPLACE_WITH_KV_NAMESPACE_ID"   # 👤 YOU: fill in after step 1 below
+
+# Environment variables
+# 👤 YOU: set RESEND_API_KEY as a secret (never put real keys here):
+#   npx wrangler secret put RESEND_API_KEY
