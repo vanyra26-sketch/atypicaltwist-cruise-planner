@@ -725,6 +725,17 @@
     }
 
     .shop-slot { display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+
+    /* ── Affiliate disclosure ── */
+    .affiliate-disclosure {
+      font-size: 0.68rem;
+      color: var(--dim);
+      text-align: center;
+      margin: 0.75rem auto 0;
+      max-width: 820px;
+      letter-spacing: 0.04em;
+      padding: 0 1rem;
+    }
   </style>
 </head>
 <body>
@@ -790,6 +801,8 @@
   </div>
 
   <ul id="task-list"></ul>
+
+  <p class="affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
 
   <div class="empty-state" id="empty-state">
     <div class="empty-icon">⚓</div>
@@ -1211,92 +1224,92 @@
     {
       emoji: "🧳", label: "Pack Your Bags", cat: "packing",
       items: [
-        { text: "Casual Clothes",       shopUrl: "https://www.amazon.com/s?k=casual+outfits+for+cruise" },
-        { text: "Elegant Night Attire", shopUrl: "https://www.amazon.com/s?k=formal+dinner+attire+cruise+night" },
-        { text: "Theme Night Attire",   shopUrl: "https://www.amazon.com/s?k=cruise+theme+night+outfit" },
-        { text: "Jacket/Sweater",       shopUrl: "https://www.amazon.com/s?k=packable+lightweight+jacket+cruise" },
-        { text: "Pajamas",              shopUrl: "https://www.amazon.com/s?k=travel+pajamas+soft+lightweight" },
-        { text: "Underwear",            shopUrl: "https://www.amazon.com/s?k=travel+underwear+quick+dry" },
-        { text: "Swimwear",             shopUrl: "https://www.amazon.com/s?k=womens+swimwear+bathing+suit+cruise" },
-        { text: "Coverups",             shopUrl: "https://www.amazon.com/s?k=swimsuit+cover+up+beach" },
+        { text: "Casual Clothes",       shopUrl: "https://www.amazon.com/s?k=casual+outfits+for+cruise&tag=atypicaltwist-20" },
+        { text: "Elegant Night Attire", shopUrl: "https://www.amazon.com/s?k=formal+dinner+attire+cruise+night&tag=atypicaltwist-20" },
+        { text: "Theme Night Attire",   shopUrl: "https://www.amazon.com/s?k=cruise+theme+night+outfit&tag=atypicaltwist-20" },
+        { text: "Jacket/Sweater",       shopUrl: "https://www.amazon.com/s?k=packable+lightweight+jacket+cruise&tag=atypicaltwist-20" },
+        { text: "Pajamas",              shopUrl: "https://www.amazon.com/s?k=travel+pajamas+soft+lightweight&tag=atypicaltwist-20" },
+        { text: "Underwear",            shopUrl: "https://www.amazon.com/s?k=travel+underwear+quick+dry&tag=atypicaltwist-20" },
+        { text: "Swimwear",             shopUrl: "https://www.amazon.com/s?k=womens+swimwear+bathing+suit+cruise&tag=atypicaltwist-20" },
+        { text: "Coverups",             shopUrl: "https://www.amazon.com/s?k=swimsuit+cover+up+beach&tag=atypicaltwist-20" },
       ]
     },
     {
       emoji: "💟", label: "Shore Steps", cat: "packing",
       items: [
-        { text: "Water Shoes",      shopUrl: "https://www.amazon.com/s?k=water+shoes+aqua+socks" },
-        { text: "Flip Flops/Sandals", shopUrl: "https://www.amazon.com/s?k=flip+flops+beach+sandals" },
-        { text: "Closed-Toe Shoes",  shopUrl: "https://www.amazon.com/s?k=comfortable+walking+shoes+travel" },
-        { text: "Dressy Shoes",      shopUrl: "https://www.amazon.com/s?k=dressy+heels+formal+sandals+cruise" },
+        { text: "Water Shoes",      shopUrl: "https://www.amazon.com/s?k=water+shoes+aqua+socks&tag=atypicaltwist-20" },
+        { text: "Flip Flops/Sandals", shopUrl: "https://www.amazon.com/s?k=flip+flops+beach+sandals&tag=atypicaltwist-20" },
+        { text: "Closed-Toe Shoes",  shopUrl: "https://www.amazon.com/s?k=comfortable+walking+shoes+travel&tag=atypicaltwist-20" },
+        { text: "Dressy Shoes",      shopUrl: "https://www.amazon.com/s?k=dressy+heels+formal+sandals+cruise&tag=atypicaltwist-20" },
       ]
     },
     {
       emoji: "🧼", label: "Glow Up Bag", cat: "packing",
       items: [
-        { text: "Shampoo/Conditioner", shopUrl: "https://www.amazon.com/s?k=travel+size+shampoo+conditioner" },
-        { text: "Deodorant",           shopUrl: "https://www.amazon.com/s?k=travel+size+deodorant" },
-        { text: "Feminine Hygiene",    shopUrl: "https://www.amazon.com/s?k=feminine+hygiene+travel" },
-        { text: "Wrinkle Releaser",    shopUrl: "https://www.amazon.com/s?k=downy+wrinkle+releaser+travel+size" },
-        { text: "Sunscreen",           shopUrl: "https://www.amazon.com/s?k=reef+safe+sunscreen+travel" },
-        { text: "First Aid Kit",       shopUrl: "https://www.amazon.com/s?k=travel+first+aid+kit" },
-        { text: "Toothbrush/Paste",    shopUrl: "https://www.amazon.com/s?k=travel+toothbrush+toothpaste" },
-        { text: "Floss",               shopUrl: "https://www.amazon.com/s?k=travel+floss" },
-        { text: "Hair Brush/Comb",     shopUrl: "https://www.amazon.com/s?k=travel+hair+brush+comb" },
-        { text: "Medicines",           shopUrl: "https://www.amazon.com/s?k=travel+medicine+kit" },
-        { text: "Lotion",              shopUrl: "https://www.amazon.com/s?k=travel+size+lotion" },
-        { text: "Contacts/Glasses",    shopUrl: "https://www.amazon.com/s?k=contact+lens+travel+case" },
-        { text: "Cosmetics",           shopUrl: "https://www.amazon.com/s?k=travel+makeup+bag" },
-        { text: "Seasickness Meds",    shopUrl: "https://www.amazon.com/s?k=bonine+motion+sickness" },
+        { text: "Shampoo/Conditioner", shopUrl: "https://www.amazon.com/s?k=travel+size+shampoo+conditioner&tag=atypicaltwist-20" },
+        { text: "Deodorant",           shopUrl: "https://www.amazon.com/s?k=travel+size+deodorant&tag=atypicaltwist-20" },
+        { text: "Feminine Hygiene",    shopUrl: "https://www.amazon.com/s?k=feminine+hygiene+travel&tag=atypicaltwist-20" },
+        { text: "Wrinkle Releaser",    shopUrl: "https://www.amazon.com/s?k=downy+wrinkle+releaser+travel+size&tag=atypicaltwist-20" },
+        { text: "Sunscreen",           shopUrl: "https://www.amazon.com/s?k=reef+safe+sunscreen+travel&tag=atypicaltwist-20" },
+        { text: "First Aid Kit",       shopUrl: "https://www.amazon.com/s?k=travel+first+aid+kit&tag=atypicaltwist-20" },
+        { text: "Toothbrush/Paste",    shopUrl: "https://www.amazon.com/s?k=travel+toothbrush+toothpaste&tag=atypicaltwist-20" },
+        { text: "Floss",               shopUrl: "https://www.amazon.com/s?k=travel+floss&tag=atypicaltwist-20" },
+        { text: "Hair Brush/Comb",     shopUrl: "https://www.amazon.com/s?k=travel+hair+brush+comb&tag=atypicaltwist-20" },
+        { text: "Medicines",           shopUrl: "https://www.amazon.com/s?k=travel+medicine+kit&tag=atypicaltwist-20" },
+        { text: "Lotion",              shopUrl: "https://www.amazon.com/s?k=travel+size+lotion&tag=atypicaltwist-20" },
+        { text: "Contacts/Glasses",    shopUrl: "https://www.amazon.com/s?k=contact+lens+travel+case&tag=atypicaltwist-20" },
+        { text: "Cosmetics",           shopUrl: "https://www.amazon.com/s?k=travel+makeup+bag&tag=atypicaltwist-20" },
+        { text: "Seasickness Meds",    shopUrl: "https://www.amazon.com/s?k=bonine+motion+sickness&tag=atypicaltwist-20" },
       ]
     },
     {
       emoji: "⚓", label: "Cruise Hacks", cat: "onboard",
       items: [
-        { text: "Magnetic Hooks",               shopUrl: "https://www.amazon.com/s?k=DIYMAG+magnetic+hooks+cruise" },
-        { text: "Outlet Extender with USB Slots", shopUrl: "https://www.amazon.com/s?k=TESSAN+outlet+extender+1+AC+USB+no+surge+cruise",
+        { text: "Magnetic Hooks",               shopUrl: "https://www.amazon.com/s?k=DIYMAG+magnetic+hooks+cruise&tag=atypicaltwist-20" },
+        { text: "Outlet Extender with USB Slots", shopUrl: "https://www.amazon.com/s?k=TESSAN+outlet+extender+1+AC+USB+no+surge+cruise&tag=atypicaltwist-20",
           note: "Royal Caribbean only allows a block with a single AC outlet plus USB ports — no surge protector. Blocks with 2 or more AC outlets are NOT permitted. Other cruise lines may vary — always verify your cruise line’s current policy before packing." },
-        { text: "Outlet Stabilizers",           shopUrl: "https://www.amazon.com/s?k=outlet+stabilizer+plug+tightener" },
-        { text: "Door Decorations",             shopUrl: "https://www.amazon.com/s?k=cruise+door+magnets+decorations" },
-        { text: "Neck/Travel Fan",              shopUrl: "https://www.amazon.com/s?k=DRIFWIN+magnetic+cruise+fan" },
-        { text: "Spices/Sprinkles",             shopUrl: "https://www.amazon.com/s?k=travel+spice+containers" },
-        { text: "Lanyard",                      shopUrl: "https://www.amazon.com/s?k=cruise+lanyard+retractable" },
-        { text: "Reusable Straws",              shopUrl: "https://www.amazon.com/s?k=reusable+straws+travel+case" },
-        { text: "Ziploc Bags",                  shopUrl: "https://www.amazon.com/s?k=ziploc+freezer+bags+variety" },
-        { text: "Phone Charger/Power Bank",     shopUrl: "https://www.amazon.com/s?k=anker+power+bank+travel" },
-        { text: "Dry Bag",                      shopUrl: "https://www.amazon.com/s?k=dry+bag+waterproof+travel" },
+        { text: "Outlet Stabilizers",           shopUrl: "https://www.amazon.com/s?k=outlet+stabilizer+plug+tightener&tag=atypicaltwist-20" },
+        { text: "Door Decorations",             shopUrl: "https://www.amazon.com/s?k=cruise+door+magnets+decorations&tag=atypicaltwist-20" },
+        { text: "Neck/Travel Fan",              shopUrl: "https://www.amazon.com/s?k=DRIFWIN+magnetic+cruise+fan&tag=atypicaltwist-20" },
+        { text: "Spices/Sprinkles",             shopUrl: "https://www.amazon.com/s?k=travel+spice+containers&tag=atypicaltwist-20" },
+        { text: "Lanyard",                      shopUrl: "https://www.amazon.com/s?k=cruise+lanyard+retractable&tag=atypicaltwist-20" },
+        { text: "Reusable Straws",              shopUrl: "https://www.amazon.com/s?k=reusable+straws+travel+case&tag=atypicaltwist-20" },
+        { text: "Ziploc Bags",                  shopUrl: "https://www.amazon.com/s?k=ziploc+freezer+bags+variety&tag=atypicaltwist-20" },
+        { text: "Phone Charger/Power Bank",     shopUrl: "https://www.amazon.com/s?k=anker+power+bank+travel&tag=atypicaltwist-20" },
+        { text: "Dry Bag",                      shopUrl: "https://www.amazon.com/s?k=dry+bag+waterproof+travel&tag=atypicaltwist-20" },
       ]
     },
     {
       emoji: "🏖️", label: "Sun & Surf", cat: "excursions",
       items: [
-        { text: "Inflatable Float",  shopUrl: "https://www.amazon.com/s?k=inflatable+pool+float+travel" },
-        { text: "Towel Clips/Bands", shopUrl: "https://www.amazon.com/s?k=towel+clips+cruise+beach" },
-        { text: "Snorkel Gear",      shopUrl: "https://www.amazon.com/s?k=snorkel+set+travel" },
-        { text: "Beach Toys",        shopUrl: "https://www.amazon.com/s?k=beach+toys+travel" },
-        { text: "Sunglasses",        shopUrl: "https://www.amazon.com/s?k=polarized+sunglasses+travel" },
-        { text: "Hat",               shopUrl: "https://www.amazon.com/s?k=packable+sun+hat+travel" },
-        { text: "Water Bottle",      shopUrl: "https://www.amazon.com/s?k=insulated+water+bottle+travel" },
+        { text: "Inflatable Float",  shopUrl: "https://www.amazon.com/s?k=inflatable+pool+float+travel&tag=atypicaltwist-20" },
+        { text: "Towel Clips/Bands", shopUrl: "https://www.amazon.com/s?k=towel+clips+cruise+beach&tag=atypicaltwist-20" },
+        { text: "Snorkel Gear",      shopUrl: "https://www.amazon.com/s?k=snorkel+set+travel&tag=atypicaltwist-20" },
+        { text: "Beach Toys",        shopUrl: "https://www.amazon.com/s?k=beach+toys+travel&tag=atypicaltwist-20" },
+        { text: "Sunglasses",        shopUrl: "https://www.amazon.com/s?k=polarized+sunglasses+travel&tag=atypicaltwist-20" },
+        { text: "Hat",               shopUrl: "https://www.amazon.com/s?k=packable+sun+hat+travel&tag=atypicaltwist-20" },
+        { text: "Water Bottle",      shopUrl: "https://www.amazon.com/s?k=insulated+water+bottle+travel&tag=atypicaltwist-20" },
       ]
     },
     {
       emoji: "💍", label: "Finishing Touches", cat: "packing",
       items: [
-        { text: "Book",               shopUrl: "https://www.amazon.com/s?k=best+beach+reads+2026" },
-        { text: "Deck of Cards",      shopUrl: "https://www.amazon.com/s?k=playing+cards+travel" },
-        { text: "Jewelry",            shopUrl: "https://www.amazon.com/s?k=travel+jewelry+organizer" },
-        { text: "Hair Styling Tools", shopUrl: "https://www.amazon.com/s?k=dual+voltage+travel+hair+tools" },
+        { text: "Book",               shopUrl: "https://www.amazon.com/s?k=best+beach+reads+2026&tag=atypicaltwist-20" },
+        { text: "Deck of Cards",      shopUrl: "https://www.amazon.com/s?k=playing+cards+travel&tag=atypicaltwist-20" },
+        { text: "Jewelry",            shopUrl: "https://www.amazon.com/s?k=travel+jewelry+organizer&tag=atypicaltwist-20" },
+        { text: "Hair Styling Tools", shopUrl: "https://www.amazon.com/s?k=dual+voltage+travel+hair+tools&tag=atypicaltwist-20" },
       ]
     },
     {
       emoji: "📋", label: "All Hands on Deck", cat: "documents",
       items: [
-        { text: "Passport and/or Birth Certificate and ID", shopUrl: "https://www.amazon.com/s?k=passport+holder+travel+wallet" },
-        { text: "Bag or Purse for Documents",               shopUrl: "https://www.amazon.com/s?k=travel+document+organizer+bag" },
-        { text: "Cash & Credit Cards",                      shopUrl: "https://www.amazon.com/s?k=rfid+blocking+travel+wallet" },
-        { text: "Singles for Extra Tips",                   shopUrl: "https://www.amazon.com/s?k=money+organizer+travel" },
-        { text: "Cruise Ship Boarding Pass",                shopUrl: "https://www.amazon.com/s?k=waterproof+document+pouch" },
+        { text: "Passport and/or Birth Certificate and ID", shopUrl: "https://www.amazon.com/s?k=passport+holder+travel+wallet&tag=atypicaltwist-20" },
+        { text: "Bag or Purse for Documents",               shopUrl: "https://www.amazon.com/s?k=travel+document+organizer+bag&tag=atypicaltwist-20" },
+        { text: "Cash & Credit Cards",                      shopUrl: "https://www.amazon.com/s?k=rfid+blocking+travel+wallet&tag=atypicaltwist-20" },
+        { text: "Singles for Extra Tips",                   shopUrl: "https://www.amazon.com/s?k=money+organizer+travel&tag=atypicaltwist-20" },
+        { text: "Cruise Ship Boarding Pass",                shopUrl: "https://www.amazon.com/s?k=waterproof+document+pouch&tag=atypicaltwist-20" },
         { text: "Downloaded Cruise Line App" },
-        { text: "Cruise Luggage Tags",                      shopUrl: "https://www.amazon.com/s?k=cruise+luggage+tag+holders" },
+        { text: "Cruise Luggage Tags",                      shopUrl: "https://www.amazon.com/s?k=cruise+luggage+tag+holders&tag=atypicaltwist-20" },
       ]
     },
   ];
