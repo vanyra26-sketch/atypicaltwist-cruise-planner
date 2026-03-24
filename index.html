@@ -33,7 +33,7 @@
       color: var(--cream);
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      min-height: 100vh;
+      min-height: 100vh; min-height: 100dvh;
       background-image:
         radial-gradient(ellipse at 80% 0%, rgba(201,160,80,0.07) 0%, transparent 60%),
         radial-gradient(ellipse at 10% 90%, rgba(21,34,54,0.9) 0%, transparent 70%);
@@ -585,11 +585,13 @@
 
     /* ── Shop link & note inline ── */
     .shop-link {
-      display: inline-block; margin-left: 0.35rem; font-size: 0.72rem;
-      color: rgba(154,122,63,0.55); text-decoration: none; vertical-align: middle;
-      transition: color 0.15s; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-left: 0.4rem; font-size: 1rem; font-weight: 700;
+      color: var(--dim); text-decoration: none; vertical-align: middle;
+      transition: color 0.18s, transform 0.18s; line-height: 1;
+      cursor: pointer; min-width: 28px; min-height: 28px;
     }
-    .shop-link:hover { color: var(--gold); }
+    .shop-link:hover { color: var(--gold); transform: scale(1.2); }
     .task-note-icon {
       display: inline-block; margin-left: 0.35rem; font-size: 0.72rem;
       vertical-align: middle; cursor: help; line-height: 1; position: relative;
@@ -650,6 +652,76 @@
       .cl-grid { grid-template-columns: 1fr; }
       .cl-box { width: min(92vw, 660px) !important; }
     }
+
+    /* ── Input tooltip ── */
+    .task-tooltip-wrap {
+      position: relative;
+    }
+    .task-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 0;
+      width: min(320px, 90vw);
+      background: var(--navy3);
+      border: 1px solid var(--dim);
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+      padding: 0.65rem 0.85rem;
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 200;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    }
+    .task-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 1.2rem;
+      border: 6px solid transparent;
+      border-top-color: var(--dim);
+    }
+    .task-tooltip.visible { display: block; }
+
+    /* ── iOS safe-area padding ── */
+    body {
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    header {
+      padding-top: max(0.85rem, env(safe-area-inset-top));
+    }
+
+    /* ── Ensure tap targets ≥ 44×44px on touch devices ── */
+    @media (pointer: coarse) {
+      .bell-btn {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 0.5rem;
+      }
+      .shop-link {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .add-btn {
+        min-height: 44px;
+      }
+    }
+
+    /* ── iOS font-size ≥ 16px to prevent auto-zoom ── */
+    @media (max-width: 767px) {
+      .task-input  { font-size: 16px; }
+      .styled-select { font-size: 16px; }
+      .rm-input    { font-size: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -674,7 +746,8 @@
 
   <!-- Input Card -->
   <div class="input-card">
-    <div class="input-row">
+    <div class="input-row task-tooltip-wrap">
+      <div class="task-tooltip" id="task-tooltip">Click the cart icon 🛒 next to any item to view shopping options. You can also type in your own items to customize your list.</div>
       <input type="text" class="task-input" id="task-input" placeholder="Add a cruise task or reminder…" maxlength="180"/>
       <button class="add-btn" id="add-btn">+ Add</button>
     </div>
@@ -1312,6 +1385,25 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
   document.getElementById('install-banner').style.display = 'flex';
 });
+
+// -- Input tooltip ------------------------------------------
+(function () {
+  var tip = document.getElementById('task-tooltip');
+  var inp = document.getElementById('task-input');
+  if (!tip || !inp) return;
+
+  function showTip() { tip.classList.add('visible'); }
+  function hideTip() { tip.classList.remove('visible'); }
+
+  // Desktop: hover
+  inp.addEventListener('mouseenter', showTip);
+  inp.addEventListener('mouseleave', hideTip);
+
+  // Mobile: focus/blur
+  inp.addEventListener('focus', showTip);
+  inp.addEventListener('blur', hideTip);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('install-btn');
   const dismiss = document.getElementById('install-dismiss');
