@@ -260,7 +260,7 @@
 
     .task-item {
       display: grid;
-      grid-template-columns: auto 1fr auto auto auto;
+      grid-template-columns: auto 1fr auto auto auto auto;
       align-items: start;
       gap: 1rem;
       padding: 1.1rem 1rem;
@@ -586,12 +586,13 @@
     /* ── Shop link & note inline ── */
     .shop-link {
       display: inline-flex; align-items: center; justify-content: center;
-      margin-left: 0.4rem; font-size: 1rem; font-weight: 700;
-      color: var(--dim); text-decoration: none; vertical-align: middle;
-      transition: color 0.18s, transform 0.18s; line-height: 1;
-      cursor: pointer; min-width: 28px; min-height: 28px;
+      font-size: 1.35rem;
+      color: var(--gold); text-decoration: none;
+      transition: color 0.15s, transform 0.18s, filter 0.18s; line-height: 1;
+      cursor: pointer; min-width: 44px; min-height: 44px;
+      margin: 0;
     }
-    .shop-link:hover { color: var(--gold); transform: scale(1.2); }
+    .shop-link:hover { color: var(--gold-lt); transform: scale(1.15); filter: brightness(1.2); }
     .task-note-icon {
       display: inline-block; margin-left: 0.35rem; font-size: 0.72rem;
       vertical-align: middle; cursor: help; line-height: 1; position: relative;
@@ -722,6 +723,8 @@
       .styled-select { font-size: 16px; }
       .rm-input    { font-size: 16px; }
     }
+
+    .shop-slot { display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
   </style>
 </head>
 <body>
@@ -933,6 +936,9 @@
       const txt = document.createElement('div');
       txt.className = 'task-text';
       txt.textContent = t.text;
+      // shop-slot: always added to li for consistent grid layout
+      const shopSlot = document.createElement('div');
+      shopSlot.className = 'shop-slot';
       if (t.shopUrl) {
         const shop = document.createElement('a');
         shop.className = 'shop-link';
@@ -942,7 +948,7 @@
         shop.textContent = '🛒';
         shop.title = 'Shop this item';
         shop.addEventListener('click', e => e.stopPropagation());
-        txt.appendChild(shop);
+        shopSlot.appendChild(shop);
       }
       if (t.note) {
         const noteEl = document.createElement('span');
@@ -983,7 +989,7 @@
       } else {
         bell.addEventListener("click", () => onBellClick(t));
       }
-      li.append(cb, body, badge, bell, del);
+      li.append(cb, body, badge, shopSlot, bell, del);
       list.appendChild(li);
     });
 
