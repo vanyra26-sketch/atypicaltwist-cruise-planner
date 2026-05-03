@@ -1381,23 +1381,38 @@
           lbl.appendChild(w);
         }
         if (item.shopUrl) {
-          const a = document.createElement("a");
-          a.href = item.shopUrl;
-          a.target = "_blank";
-          a.rel = "noopener";
-          a.style.cssText = "margin-left:0.3rem;font-size:0.85rem;text-decoration:none;";
-          a.textContent = "🛒";
-          a.addEventListener("click", e => e.stopPropagation());
-          lbl.appendChild(a);
           if (item.rcUrl) {
-            const rc = document.createElement("a");
-            rc.href = item.rcUrl;
-            rc.target = "_blank";
-            rc.rel = "noopener";
-            rc.style.cssText = "margin-left:0.4rem;font-size:0.75rem;text-decoration:none;color:#9a7a3f;white-space:nowrap;";
-            rc.textContent = "RC Approved \u2705";
-            rc.addEventListener("click", e => e.stopPropagation());
-            lbl.appendChild(rc);
+            const pair = document.createElement("span");
+            pair.style.cssText = "display:inline-flex;gap:0.5rem;margin-left:0.3rem;vertical-align:middle;";
+            const makeCartLink = (href, label) => {
+              const wrap = document.createElement("span");
+              wrap.style.cssText = "display:inline-flex;flex-direction:column;align-items:center;line-height:1.2;";
+              const a = document.createElement("a");
+              a.href = href;
+              a.target = "_blank";
+              a.rel = "noopener";
+              a.style.cssText = "font-size:0.85rem;text-decoration:none;";
+              a.textContent = "🛒";
+              a.addEventListener("click", e => e.stopPropagation());
+              const lbl2 = document.createElement("span");
+              lbl2.style.cssText = "font-size:0.6rem;color:#9a7a3f;white-space:nowrap;";
+              lbl2.textContent = label;
+              wrap.appendChild(a);
+              wrap.appendChild(lbl2);
+              return wrap;
+            };
+            pair.appendChild(makeCartLink(item.shopUrl, "All Lines"));
+            pair.appendChild(makeCartLink(item.rcUrl, "RC \u2705"));
+            lbl.appendChild(pair);
+          } else {
+            const a = document.createElement("a");
+            a.href = item.shopUrl;
+            a.target = "_blank";
+            a.rel = "noopener";
+            a.style.cssText = "margin-left:0.3rem;font-size:0.85rem;text-decoration:none;";
+            a.textContent = "🛒";
+            a.addEventListener("click", e => e.stopPropagation());
+            lbl.appendChild(a);
           }
         } else if (item.shopUrls) {
           const wrap = document.createElement("span");
