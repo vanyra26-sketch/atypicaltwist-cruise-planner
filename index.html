@@ -896,7 +896,7 @@
       <button class="cl-ctrl-btn" id="cl-select-all">Select All</button>
       <button class="cl-ctrl-btn" id="cl-deselect-all">Deselect All</button>
     </div>
-    <div style="background:#fff8e7;border-left:3px solid #9a7a3f;padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.78rem;color:#4a4a4a;border-radius:0 6px 6px 0;">
+    <div style="background:#fff3cd;border-left:3px solid #9a7a3f;padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.78rem;color:#5a4000;border-radius:0 6px 6px 0;">
       <strong>Affiliate Disclosure:</strong> Atypical Twist Travel is a participant in the Amazon Services LLC Associates Program. We may earn a small commission if you purchase through our links, at no extra cost to you.
     </div>
     <div class="cl-scroll">
@@ -1231,7 +1231,7 @@
 
   const CHECKLIST_DATA = [
     {
-      cat: ‘🧳 Pack Your Bags’,
+      cat: ‘🧳 Pack Your Bags’, slug: ‘packing’,
       shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
         { text: ‘Casual Clothes (Women)’, shopUrl: ‘https://amzn.to/3QL9MZX’ },
@@ -1259,7 +1259,7 @@
       ]
     },
     {
-      cat: ‘💟 Shore Steps’,
+      cat: ‘💟 Shore Steps’, slug: ‘packing’,
       shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
         { text: ‘Water Shoes’, shopUrl: ‘https://amzn.to/4eWqpfd’ },
@@ -1270,7 +1270,7 @@
       ]
     },
     {
-      cat: ‘🧼 Glow Up Bag’,
+      cat: ‘🧼 Glow Up Bag’, slug: ‘packing’,
       shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
         { text: ‘Shampoo/Conditioner’ },
@@ -1290,7 +1290,7 @@
       ]
     },
     {
-      cat: ‘⚓ Cruise Hacks’,
+      cat: ‘⚓ Cruise Hacks’, slug: ‘onboard’,
       shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
         { text: ‘Magnetic Hooks’, shopUrl: ‘https://amzn.to/3RdpblP’ },
@@ -1308,7 +1308,7 @@
       ]
     },
     {
-      cat: ‘🏖️ Sun & Surf’,
+      cat: ‘🏖️ Sun & Surf’, slug: ‘excursions’,
       shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
         { text: ‘Inflatable Float’, shopUrl: ‘https://amzn.to/4wcWoya’ },
@@ -1323,7 +1323,7 @@
       ]
     },
     {
-      cat: ‘💍 Finishing Touches’,
+      cat: ‘💍 Finishing Touches’, slug: ‘packing’,
       shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
         { text: ‘Book’ },
@@ -1333,7 +1333,7 @@
       ]
     },
     {
-      cat: ‘📋 All Hands on Deck’,
+      cat: ‘📋 All Hands on Deck’, slug: ‘documents’,
       shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
         { text: ‘Passport and/or Birth Certificate and ID’, shopUrl: ‘https://amzn.to/42LSX3G’ },
@@ -1423,7 +1423,7 @@
     let added = 0;
     checked.forEach(cb => {
       const item = CHECKLIST_DATA[+cb.dataset.catIdx].items[+cb.dataset.itemIdx];
-      const cat  = CHECKLIST_DATA[+cb.dataset.catIdx].cat;
+      const cat  = CHECKLIST_DATA[+cb.dataset.catIdx].slug;
       if (existing.has(item.text.trim().toLowerCase())) return;
       const entry = { id: Date.now() + added++, text: item.text, cat, done: false };
       if (item.shopUrl) entry.shopUrl = item.shopUrl; // AFFILIATE-LINK
