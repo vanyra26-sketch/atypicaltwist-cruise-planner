@@ -1296,7 +1296,7 @@
       shopCatUrl: 'https://amzn.to/4n4AuIU',
       items: [
         { text: 'Magnetic Hooks', shopUrl: 'https://amzn.to/3RdpblP' },
-        { text: 'Outlet Extender with USB Slots', shopUrl: 'https://amzn.to/49hNp4z', note: 'Not approved for Royal Caribbean — use this Royal Caribbean approved option instead: https://amzn.to/429nXKU' },
+        { text: 'Outlet Extender with USB Slots', shopUrl: 'https://amzn.to/49hNp4z', note: 'Not approved for Royal Caribbean — use the RC Approved link instead.', rcUrl: 'https://amzn.to/429nXKU' },
         { text: 'Outlet Stabilizers', shopUrl: 'https://amzn.to/4cLIHhW' },
         { text: 'Door Decorations', shopUrl: 'https://amzn.to/4uds5oU' },
         { text: 'Neck/Travel Fan', shopUrl: 'https://amzn.to/42e3BQF' },
@@ -1389,6 +1389,16 @@
           a.textContent = "🛒";
           a.addEventListener("click", e => e.stopPropagation());
           lbl.appendChild(a);
+          if (item.rcUrl) {
+            const rc = document.createElement("a");
+            rc.href = item.rcUrl;
+            rc.target = "_blank";
+            rc.rel = "noopener";
+            rc.style.cssText = "margin-left:0.4rem;font-size:0.75rem;text-decoration:none;color:#9a7a3f;white-space:nowrap;";
+            rc.textContent = "RC Approved \u2705";
+            rc.addEventListener("click", e => e.stopPropagation());
+            lbl.appendChild(rc);
+          }
         } else if (item.shopUrls) {
           const wrap = document.createElement("span");
           wrap.className = "shop-dropdown";
