@@ -736,6 +736,12 @@
       letter-spacing: 0.04em;
       padding: 0 1rem;
     }
+    .shop-dropdown { position: relative; display: inline-block; margin-left: 0.3rem; }
+    .shop-dropdown .shop-btn { background: none; border: none; cursor: pointer; font-size: 0.85rem; padding: 0; line-height: 1; }
+    .shop-dropdown .shop-options { display: none; position: absolute; left: 0; top: 100%; background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 0.4rem 0; min-width: 220px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .shop-dropdown .shop-options a { display: block; padding: 0.4rem 0.75rem; font-size: 0.78rem; color: #1a3a4a; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .shop-dropdown .shop-options a:hover { background: #f5f0e8; color: #9a7a3f; }
+    .shop-dropdown:hover .shop-options { display: block; }
   </style>
 </head>
 <body>
@@ -889,6 +895,9 @@
     <div class="cl-controls">
       <button class="cl-ctrl-btn" id="cl-select-all">Select All</button>
       <button class="cl-ctrl-btn" id="cl-deselect-all">Deselect All</button>
+    </div>
+    <div style="background:#fff8e7;border-left:3px solid #9a7a3f;padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.78rem;color:#4a4a4a;border-radius:0 6px 6px 0;">
+      <strong>Affiliate Disclosure:</strong> Atypical Twist Travel is a participant in the Amazon Services LLC Associates Program. We may earn a small commission if you purchase through our links, at no extra cost to you.
     </div>
     <div class="cl-scroll">
       <div class="cl-grid" id="cl-grid"></div>
@@ -1222,96 +1231,120 @@
 
   const CHECKLIST_DATA = [
     {
-      emoji: "🧳", label: "Pack Your Bags", cat: "packing",
+      cat: ‘🧳 Pack Your Bags’,
+      shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
-        { text: "Casual Clothes",       shopUrl: "https://www.amazon.com/s?k=casual+outfits+for+cruise&tag=atypicaltwist-20" },
-        { text: "Elegant Night Attire", shopUrl: "https://www.amazon.com/s?k=formal+dinner+attire+cruise+night&tag=atypicaltwist-20" },
-        { text: "Theme Night Attire",   shopUrl: "https://www.amazon.com/s?k=cruise+theme+night+outfit&tag=atypicaltwist-20" },
-        { text: "Jacket/Sweater",       shopUrl: "https://www.amazon.com/s?k=packable+lightweight+jacket+cruise&tag=atypicaltwist-20" },
-        { text: "Pajamas",              shopUrl: "https://www.amazon.com/s?k=travel+pajamas+soft+lightweight&tag=atypicaltwist-20" },
-        { text: "Underwear",            shopUrl: "https://www.amazon.com/s?k=travel+underwear+quick+dry&tag=atypicaltwist-20" },
-        { text: "Swimwear",             shopUrl: "https://www.amazon.com/s?k=womens+swimwear+bathing+suit+cruise&tag=atypicaltwist-20" },
-        { text: "Coverups",             shopUrl: "https://www.amazon.com/s?k=swimsuit+cover+up+beach&tag=atypicaltwist-20" },
+        { text: ‘Casual Clothes (Women)’, shopUrl: ‘https://amzn.to/3QL9MZX’ },
+        { text: ‘Dressy Casual (Women)’, shopUrls: [
+          { label: ‘Ruffle Chiffon Jumpsuit’, url: ‘https://amzn.to/4d0hVB1’ },
+          { label: ‘Floral Sundress with Pockets’, url: ‘https://amzn.to/4wbSWnm’ }
+        ]},
+        { text: ‘Elegant Night Attire (Women)’, shopUrls: [
+          { label: ‘Flowy Maxi Dress’, url: ‘https://amzn.to/3OIIL8Z’ },
+          { label: ‘Floral Sundress’, url: ‘https://amzn.to/4wbSWnm’ }
+        ]},
+        { text: ‘Theme Night Attire’ },
+        { text: ‘Jacket/Sweater (Women)’, shopUrl: ‘https://amzn.to/4n5EZTR’ },
+        { text: ‘Pajamas’ },
+        { text: ‘Underwear’ },
+        { text: ‘Swimwear’ },
+        { text: ‘Coverups (Women)’, shopUrls: [
+          { label: ‘Casual Summer Overalls’, url: ‘https://amzn.to/42rTNml’ },
+          { label: ‘UPF 50+ Swim Hoodie’, url: ‘https://amzn.to/4n6cmpv’ },
+          { label: ‘Sarong Cover Up’, url: ‘https://amzn.to/4d7pl5T’ },
+          { label: ‘Bikini Print T-Shirt Dress’, url: ‘https://amzn.to/4n39w4w’ },
+          { label: ‘Button Down Cover Up’, url: ‘https://amzn.to/3RgJ8Iw’ },
+          { label: ‘Crochet Chiffon Cover Up’, url: ‘https://amzn.to/3OUx5A2’ }
+        ]}
       ]
     },
     {
-      emoji: "💟", label: "Shore Steps", cat: "packing",
+      cat: ‘💟 Shore Steps’,
+      shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
-        { text: "Water Shoes",      shopUrl: "https://www.amazon.com/s?k=water+shoes+aqua+socks&tag=atypicaltwist-20" },
-        { text: "Flip Flops/Sandals", shopUrl: "https://www.amazon.com/s?k=flip+flops+beach+sandals&tag=atypicaltwist-20" },
-        { text: "Closed-Toe Shoes",  shopUrl: "https://www.amazon.com/s?k=comfortable+walking+shoes+travel&tag=atypicaltwist-20" },
-        { text: "Dressy Shoes",      shopUrl: "https://www.amazon.com/s?k=dressy+heels+formal+sandals+cruise&tag=atypicaltwist-20" },
+        { text: ‘Water Shoes’, shopUrl: ‘https://amzn.to/4eWqpfd’ },
+        { text: ‘Flip Flops/Sandals (Women)’, shopUrl: ‘https://amzn.to/3QKKNGe’ },
+        { text: ‘Closed-Toe Shoes’ },
+        { text: ‘Dressy Shoes’ },
+        { text: ‘Waterproof Waist Bag’, shopUrl: ‘https://amzn.to/3QYlwbv’ }
       ]
     },
     {
-      emoji: "🧼", label: "Glow Up Bag", cat: "packing",
+      cat: ‘🧼 Glow Up Bag’,
+      shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
-        { text: "Shampoo/Conditioner", shopUrl: "https://www.amazon.com/s?k=travel+size+shampoo+conditioner&tag=atypicaltwist-20" },
-        { text: "Deodorant",           shopUrl: "https://www.amazon.com/s?k=travel+size+deodorant&tag=atypicaltwist-20" },
-        { text: "Feminine Hygiene",    shopUrl: "https://www.amazon.com/s?k=feminine+hygiene+travel&tag=atypicaltwist-20" },
-        { text: "Wrinkle Releaser",    shopUrl: "https://www.amazon.com/s?k=downy+wrinkle+releaser+travel+size&tag=atypicaltwist-20" },
-        { text: "Sunscreen",           shopUrl: "https://www.amazon.com/s?k=reef+safe+sunscreen+travel&tag=atypicaltwist-20" },
-        { text: "First Aid Kit",       shopUrl: "https://www.amazon.com/s?k=travel+first+aid+kit&tag=atypicaltwist-20" },
-        { text: "Toothbrush/Paste",    shopUrl: "https://www.amazon.com/s?k=travel+toothbrush+toothpaste&tag=atypicaltwist-20" },
-        { text: "Floss",               shopUrl: "https://www.amazon.com/s?k=travel+floss&tag=atypicaltwist-20" },
-        { text: "Hair Brush/Comb",     shopUrl: "https://www.amazon.com/s?k=travel+hair+brush+comb&tag=atypicaltwist-20" },
-        { text: "Medicines",           shopUrl: "https://www.amazon.com/s?k=travel+medicine+kit&tag=atypicaltwist-20" },
-        { text: "Lotion",              shopUrl: "https://www.amazon.com/s?k=travel+size+lotion&tag=atypicaltwist-20" },
-        { text: "Contacts/Glasses",    shopUrl: "https://www.amazon.com/s?k=contact+lens+travel+case&tag=atypicaltwist-20" },
-        { text: "Cosmetics",           shopUrl: "https://www.amazon.com/s?k=travel+makeup+bag&tag=atypicaltwist-20" },
-        { text: "Seasickness Meds",    shopUrl: "https://www.amazon.com/s?k=bonine+motion+sickness&tag=atypicaltwist-20" },
+        { text: ‘Shampoo/Conditioner’ },
+        { text: ‘Deodorant’ },
+        { text: ‘Feminine Hygiene’ },
+        { text: ‘Wrinkle Releaser’, shopUrl: ‘https://amzn.to/4ngE7M7’ },
+        { text: ‘Sunscreen’, shopUrl: ‘https://amzn.to/48CHBCH’ },
+        { text: ‘First Aid Kit’, shopUrl: ‘https://amzn.to/4tNoAWx’ },
+        { text: ‘Toothbrush/Paste’ },
+        { text: ‘Floss’ },
+        { text: ‘Hair Brush/Comb’ },
+        { text: ‘Medicines’, shopUrl: ‘https://amzn.to/4eYzKDg’ },
+        { text: ‘Lotion’ },
+        { text: ‘Contacts/Glasses’ },
+        { text: ‘Cosmetics’ },
+        { text: ‘Seasickness Meds’, shopUrl: ‘https://amzn.to/3P0DQjB’ }
       ]
     },
     {
-      emoji: "⚓", label: "Cruise Hacks", cat: "onboard",
+      cat: ‘⚓ Cruise Hacks’,
+      shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
-        { text: "Magnetic Hooks",               shopUrl: "https://www.amazon.com/s?k=DIYMAG+magnetic+hooks+cruise&tag=atypicaltwist-20" },
-        { text: "Outlet Extender with USB Slots", shopUrl: "https://www.amazon.com/s?k=TESSAN+outlet+extender+1+AC+USB+no+surge+cruise&tag=atypicaltwist-20",
-          note: "Royal Caribbean only allows a block with a single AC outlet plus USB ports — no surge protector. Blocks with 2 or more AC outlets are NOT permitted. Other cruise lines may vary — always verify your cruise line’s current policy before packing." },
-        { text: "Outlet Stabilizers",           shopUrl: "https://www.amazon.com/s?k=outlet+stabilizer+plug+tightener&tag=atypicaltwist-20" },
-        { text: "Door Decorations",             shopUrl: "https://www.amazon.com/s?k=cruise+door+magnets+decorations&tag=atypicaltwist-20" },
-        { text: "Neck/Travel Fan",              shopUrl: "https://www.amazon.com/s?k=DRIFWIN+magnetic+cruise+fan&tag=atypicaltwist-20" },
-        { text: "Spices/Sprinkles",             shopUrl: "https://www.amazon.com/s?k=travel+spice+containers&tag=atypicaltwist-20" },
-        { text: "Lanyard",                      shopUrl: "https://www.amazon.com/s?k=cruise+lanyard+retractable&tag=atypicaltwist-20" },
-        { text: "Reusable Straws",              shopUrl: "https://www.amazon.com/s?k=reusable+straws+travel+case&tag=atypicaltwist-20" },
-        { text: "Ziploc Bags",                  shopUrl: "https://www.amazon.com/s?k=ziploc+freezer+bags+variety&tag=atypicaltwist-20" },
-        { text: "Phone Charger/Power Bank",     shopUrl: "https://www.amazon.com/s?k=anker+power+bank+travel&tag=atypicaltwist-20" },
-        { text: "Dry Bag",                      shopUrl: "https://www.amazon.com/s?k=dry+bag+waterproof+travel&tag=atypicaltwist-20" },
+        { text: ‘Magnetic Hooks’, shopUrl: ‘https://amzn.to/3RdpblP’ },
+        { text: ‘Outlet Extender with USB Slots’, shopUrl: ‘https://amzn.to/49hNp4z’, note: ‘Not approved for Royal Caribbean — use this Royal Caribbean approved option instead: https://amzn.to/429nXKU’ },
+        { text: ‘Outlet Stabilizers’, shopUrl: ‘https://amzn.to/4cLIHhW’ },
+        { text: ‘Door Decorations’, shopUrl: ‘https://amzn.to/4uds5oU’ },
+        { text: ‘Neck/Travel Fan’, shopUrl: ‘https://amzn.to/42e3BQF’ },
+        { text: ‘Spices/Sprinkles’ },
+        { text: ‘Lanyard’, shopUrl: ‘https://amzn.to/4cML1VX’ },
+        { text: ‘Reusable Straws’, shopUrl: ‘https://amzn.to/4d2T6V8’ },
+        { text: ‘Ziploc Bags’ },
+        { text: ‘Phone Charger/Power Bank’, shopUrl: ‘https://amzn.to/429oWe4’ },
+        { text: ‘Dry Bag’, shopUrl: ‘https://amzn.to/4cY90Qz’ },
+        { text: ‘Luggage Tags’, shopUrl: ‘https://amzn.to/4naK9hq’ }
       ]
     },
     {
-      emoji: "🏖️", label: "Sun & Surf", cat: "excursions",
+      cat: ‘🏖️ Sun & Surf’,
+      shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
-        { text: "Inflatable Float",  shopUrl: "https://www.amazon.com/s?k=inflatable+pool+float+travel&tag=atypicaltwist-20" },
-        { text: "Towel Clips/Bands", shopUrl: "https://www.amazon.com/s?k=towel+clips+cruise+beach&tag=atypicaltwist-20" },
-        { text: "Snorkel Gear",      shopUrl: "https://www.amazon.com/s?k=snorkel+set+travel&tag=atypicaltwist-20" },
-        { text: "Beach Toys",        shopUrl: "https://www.amazon.com/s?k=beach+toys+travel&tag=atypicaltwist-20" },
-        { text: "Sunglasses",        shopUrl: "https://www.amazon.com/s?k=polarized+sunglasses+travel&tag=atypicaltwist-20" },
-        { text: "Hat",               shopUrl: "https://www.amazon.com/s?k=packable+sun+hat+travel&tag=atypicaltwist-20" },
-        { text: "Water Bottle",      shopUrl: "https://www.amazon.com/s?k=insulated+water+bottle+travel&tag=atypicaltwist-20" },
+        { text: ‘Inflatable Float’, shopUrl: ‘https://amzn.to/4wcWoya’ },
+        { text: ‘Portable Air Pump’, shopUrl: ‘https://amzn.to/4cNw0mF’ },
+        { text: ‘Towel Clips/Bands’, shopUrl: ‘https://amzn.to/4da8oYy’ },
+        { text: ‘Microfiber Beach Towel’, shopUrl: ‘https://amzn.to/4da4RJM’ },
+        { text: ‘Snorkel Gear’ },
+        { text: ‘Beach Toys’ },
+        { text: ‘Sunglasses’ },
+        { text: ‘Hat’ },
+        { text: ‘Water Bottle’, shopUrl: ‘https://amzn.to/4n866O3’ }
       ]
     },
     {
-      emoji: "💍", label: "Finishing Touches", cat: "packing",
+      cat: ‘💍 Finishing Touches’,
+      shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
-        { text: "Book",               shopUrl: "https://www.amazon.com/s?k=best+beach+reads+2026&tag=atypicaltwist-20" },
-        { text: "Deck of Cards",      shopUrl: "https://www.amazon.com/s?k=playing+cards+travel&tag=atypicaltwist-20" },
-        { text: "Jewelry",            shopUrl: "https://www.amazon.com/s?k=travel+jewelry+organizer&tag=atypicaltwist-20" },
-        { text: "Hair Styling Tools", shopUrl: "https://www.amazon.com/s?k=dual+voltage+travel+hair+tools&tag=atypicaltwist-20" },
+        { text: ‘Book’ },
+        { text: ‘Deck of Cards’ },
+        { text: ‘Jewelry’ },
+        { text: ‘Hair Styling Tools’, shopUrl: ‘https://amzn.to/3QDjIVt’ }
       ]
     },
     {
-      emoji: "📋", label: "All Hands on Deck", cat: "documents",
+      cat: ‘📋 All Hands on Deck’,
+      shopCatUrl: ‘https://amzn.to/4n4AuIU’,
       items: [
-        { text: "Passport and/or Birth Certificate and ID", shopUrl: "https://www.amazon.com/s?k=passport+holder+travel+wallet&tag=atypicaltwist-20" },
-        { text: "Bag or Purse for Documents",               shopUrl: "https://www.amazon.com/s?k=travel+document+organizer+bag&tag=atypicaltwist-20" },
-        { text: "Cash & Credit Cards",                      shopUrl: "https://www.amazon.com/s?k=rfid+blocking+travel+wallet&tag=atypicaltwist-20" },
-        { text: "Singles for Extra Tips",                   shopUrl: "https://www.amazon.com/s?k=money+organizer+travel&tag=atypicaltwist-20" },
-        { text: "Cruise Ship Boarding Pass",                shopUrl: "https://www.amazon.com/s?k=waterproof+document+pouch&tag=atypicaltwist-20" },
-        { text: "Downloaded Cruise Line App" },
-        { text: "Cruise Luggage Tags",                      shopUrl: "https://www.amazon.com/s?k=cruise+luggage+tag+holders&tag=atypicaltwist-20" },
+        { text: ‘Passport and/or Birth Certificate and ID’, shopUrl: ‘https://amzn.to/42LSX3G’ },
+        { text: ‘Bag or Purse for Documents’ },
+        { text: ‘Cash & Credit Cards’ },
+        { text: ‘Singles for Extra Tips’ },
+        { text: ‘Cruise Ship Boarding Pass’ },
+        { text: ‘Downloaded Cruise Line App’ },
+        { text: ‘Print/Download Luggage Tags’ }
       ]
-    },
+    }
   ];
 
   function openChecklistModal() {
@@ -1322,7 +1355,11 @@
       div.className = "cl-category";
       const hdr = document.createElement("div");
       hdr.className = "cl-cat-header";
-      hdr.textContent = cat.emoji + " " + cat.label;
+      if (cat.shopCatUrl) {
+        hdr.innerHTML = '<a href="' + cat.shopCatUrl + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">' + cat.cat + ' 🛒</a>';
+      } else {
+        hdr.textContent = cat.cat;
+      }
       div.appendChild(hdr);
       cat.items.forEach((item, ii) => {
         const lbl = document.createElement("label");
@@ -1340,6 +1377,34 @@
           w.title = item.note;
           w.textContent = "⚠️";
           lbl.appendChild(w);
+        }
+        if (item.shopUrl) {
+          const a = document.createElement("a");
+          a.href = item.shopUrl;
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.style.cssText = "margin-left:0.3rem;font-size:0.85rem;text-decoration:none;";
+          a.textContent = "🛒";
+          lbl.appendChild(a);
+        } else if (item.shopUrls) {
+          const wrap = document.createElement("span");
+          wrap.className = "shop-dropdown";
+          const btn = document.createElement("button");
+          btn.className = "shop-btn";
+          btn.textContent = "🛒";
+          wrap.appendChild(btn);
+          const opts = document.createElement("div");
+          opts.className = "shop-options";
+          item.shopUrls.forEach(s => {
+            const a = document.createElement("a");
+            a.href = s.url;
+            a.target = "_blank";
+            a.rel = "noopener";
+            a.textContent = s.label;
+            opts.appendChild(a);
+          });
+          wrap.appendChild(opts);
+          lbl.appendChild(wrap);
         }
         div.appendChild(lbl);
       });
