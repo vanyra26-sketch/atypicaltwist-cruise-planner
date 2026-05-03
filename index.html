@@ -806,6 +806,8 @@
     <button class="checklist-btn" id="checklist-btn">&#x1F9F3; Load Cruise Checklist</button>
   </div>
 
+  <p style="font-size:0.72rem;color:var(--dim);margin:0.25rem 0 0.75rem;opacity:0.7;">If links aren't opening correctly to the item, try <a href="#reset-planner" style="color:var(--dim);text-decoration:underline;">resetting your planner cache</a> below.</p>
+
   <ul id="task-list"></ul>
 
   <p class="affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
@@ -1450,9 +1452,20 @@
   });
   document.getElementById("cl-add-btn").addEventListener("click", addChecklistToPlanner);
 
+  document.getElementById('reset-planner').addEventListener('click', () => {
+    if (confirm('This will clear all saved planner data. Are you sure?')) {
+      localStorage.clear();
+      location.reload();
+    }
+  });
+
   render();
   renderReminders();
 </script>
+
+<div style="text-align:center;padding:1.5rem 1rem 0.5rem;">
+  <button id="reset-planner" style="background:none;border:1px solid rgba(255,255,255,0.12);color:var(--dim);font-size:0.72rem;padding:0.35rem 0.85rem;border-radius:6px;cursor:pointer;opacity:0.6;">Reset Planner</button>
+</div>
 
 <div id="install-banner">
   <div class="install-text">
